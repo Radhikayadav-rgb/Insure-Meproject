@@ -1,6 +1,6 @@
 node{
     
-    
+    def mavenHome
     def mavenCMD
     def docker
     def dockerCMD
