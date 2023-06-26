@@ -12,6 +12,7 @@ node{
         mavenCMD = "${mavenHome}/bin/mvn"
         docker = tool name: 'docker' , type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
         dockerCMD = "${docker}"
+        tagName="latest"
         
     }
     
@@ -41,7 +42,7 @@ node{
     
     stage('Containerize the application'){
         echo 'Creating Docker image'
-        sh "${dockerCMD} build -t radhikareddy/insure-me ."
+        sh "${dockerCMD} build -t insure-me:$tagName ."
     }
     
     stage('Pushing it ot the DockerHub'){
