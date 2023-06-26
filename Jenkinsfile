@@ -10,7 +10,6 @@ node{
         echo 'initialize all the variables'
         mavenHome = tool name: 'maven' , type: 'maven'
         mavenCMD = "${mavenHome}/bin/mvn"
-      
         tagName="latest"
         
     }
@@ -38,6 +37,9 @@ node{
     stage('publish test reports'){
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Capstone-Project-Live-Demo/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
     }
+    stage('image prune '){
+       sh "docker image prune -a -f"
+    }
     
     stage('Containerize the application'){
         echo 'Creating Docker image'
@@ -47,8 +49,8 @@ node{
     stage('Pushing it ot the DockerHub'){
         echo 'Pushing the docker image to DockerHub'
         withCredentials([string(credentialsId: 'dock-password', variable: 'dockerhubpwd')]) {
-        sh "${dockerCMD} login -u radhikareddy -p ${dockerhubpwd}"
-        sh "${dockerCMD} push radhikareddy/insure-me:${tagName}"
+        sh "docker login -u radhikareddy -p ${dockerhubpwd}"
+        sh "docker push radhikareddy/insure-me:${tagName}"
             
         }
         
