@@ -11,8 +11,8 @@ node{
         mavenHome = tool name: 'maven' , type: 'maven'
         mavenCMD = "${mavenHome}/bin/mvn"
         docker = tool name: 'docker' , type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-        dockerCMD = "${docker}/bin/docker"
-        tagName="3.0"
+        dockerCMD = "${docker}"
+        
     }
     
     stage('git code checkout'){
@@ -25,7 +25,7 @@ node{
             currentBuild.result = "FAILURE"
             emailext body: '''Dear All,
             The Jenkins job ${JOB_NAME} has been failed. Request you to please have a look at it immediately by clicking on the below link. 
-            ${BUILD_URL}''', subject: 'Job ${JOB_NAME} ${BUILD_NUMBER} is failed', to: 'shubham@gmail.com'
+            ${BUILD_URL}''', subject: 'Job ${JOB_NAME} ${BUILD_NUMBER} is failed', to: 'reddyradhika.r@gmail.com'
         }
     }
     
@@ -41,7 +41,7 @@ node{
     
     stage('Containerize the application'){
         echo 'Creating Docker image'
-        sh "${dockerCMD} build -t radhikareddy/insure-me:${tagName} ."
+        sh "${dockerCMD} build -t radhikareddy/insure-me:latest ."
     }
     
     stage('Pushing it ot the DockerHub'){
