@@ -5,6 +5,7 @@ node{
     def docker
     def dockerCMD
     def tagName
+    def httpport="8081"
     
     stage('prepare enviroment'){
         echo 'initialize all the variables'
