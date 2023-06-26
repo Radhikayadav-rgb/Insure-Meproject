@@ -48,6 +48,7 @@ node{
         echo 'Pushing the docker image to DockerHub'
         withCredentials([string(credentialsId: 'dock-password', variable: 'dockerhubpwd')]) {
         sh "docker login -u radhikareddy -p ${dockerhubpwd}"
+        sh "docker tag insure-me:latest radhikareddy/insure-me:${tagName}"
         sh "docker push radhikareddy/insure-me:${tagName}"
             
         }
